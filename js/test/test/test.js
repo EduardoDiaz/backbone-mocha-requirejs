@@ -1,6 +1,6 @@
 define([
         'chai',
-        '../../../src/models/hello'
+        'src/models/hello'
     ], function (chai, hello) {
         var expect = chai.expect;
 

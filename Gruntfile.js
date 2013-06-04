@@ -3,11 +3,11 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
       mocha_phantomjs: {
-        all: ['test/**/*.html']
+        all: ['js/test/**/*.html']
       },
       watch: {
         browser: {
-            files : ['test/**/test/*.js', 'test/**/test/**/*.js'],
+            files : ['js/test/**/test/*.js', 'js/test/**/test/**/*.js'],
             tasks : ['mocha_phantomjs']
         }
       }
