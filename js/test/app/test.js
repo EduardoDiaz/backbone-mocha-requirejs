@@ -2,6 +2,8 @@ define([
         'chai',
         'src/models/hello'
     ], function (chai, hello) {
+        'use strict';
+
         var expect = chai.expect;
 
         describe('#Hello', function () {
