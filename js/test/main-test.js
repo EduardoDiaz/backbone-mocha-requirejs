@@ -1,9 +1,12 @@
 require.config({
     baseUrl: '../../js',
     paths: {
-        'mocha': 'test/lib/mocha',
-        'chai' : 'test/lib/chai',
-        'sinon': 'test/lib/sinon'
+        'mocha'     : 'test/lib/mocha',
+        'chai'      : 'test/lib/chai',
+        'sinon'     : 'test/lib/sinon',
+        'jquery'    : 'src/lib/jquery',
+        'underscore': 'src/lib/underscore',
+        'backbone'  : 'src/lib/backbone'
     },
     shim: {
         'mocha': {
@@ -16,9 +19,11 @@ require.config({
 });
 
 require(['require', 'mocha'], function (require, mocha) {
+    'use strict';
+
     mocha.setup('bdd');
 
-    require(['test/app/test'], function (test) {
+    require(['test/app/test'], function () {
         (window.mochaPhantomJS || mocha).run();
     });
 });
