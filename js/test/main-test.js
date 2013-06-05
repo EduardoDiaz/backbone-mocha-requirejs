@@ -1,5 +1,6 @@
 require.config({
     baseUrl: '../../js',
+    urlArgs: 'bust=' +  (new Date()).getTime(),
     paths: {
         'mocha'     : 'test/lib/mocha',
         'chai'      : 'test/lib/chai',

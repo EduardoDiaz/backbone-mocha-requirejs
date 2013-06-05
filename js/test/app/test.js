@@ -72,18 +72,72 @@ define([
         });
 
         describe('collection.places', function () {
-            before(function () {
+            beforeEach(function () {
+                this.server = sinon.fakeServer.create();
+                this.server.autoRespond = true;
                 this.places = new PlacesCollection();
             });
 
-            after(function () {
-                this.places = null;
+            afterEach(function () {
+                this.server.restore();
             });
 
             describe('creation', function () {
                 it('has values default', function () {
                     expect(this.places).to.be.ok;
                     expect(this.places).to.have.length(0);
+                });
+
+                it('should be empty on fetch', function (done) {
+                    var places = this.places;
+
+                    this.server.respondWith('GET', '/places', [
+                        200,
+                        {'Content-Type': 'application/json'},
+                        '[]'
+                    ]);
+
+                    expect(places).to.be.ok;
+                    expect(places).to.have.length(0);
+
+                    places.once('reset', function () {
+                        expect(places).to.have.length(0);
+                        done();
+                    });
+
+                    places.fetch({reset: true});
+                });
+
+                it('has a single place', function (done) {
+                    var places = this.places, place;
+
+                    this.server.respondWith('GET', '/places', [
+                        200,
+                        {'Content-Type': 'application/json'},
+                        JSON.stringify([{
+                            id  : 1,
+                            name: 'Faro Colon',
+                            description: 'Este es un lugar bonito',
+                            country: 'Republica Dominicana',
+                            point: {
+                                lat: 10,
+                                lng: 30
+                            }
+                        }])
+                    ]);
+
+                    places.once('reset', function () {
+                        expect(places).to.have.length(1);
+
+                        place = places.at(0);
+                        expect(place).to.be.ok;
+                        expect(place.get('name')).to.contain('Faro');
+                        expect(place.get('point').lat).to.equal(10);
+
+                        done();
+                    });
+
+                    places.fetch({ reset: true });
                 });
             });
         });

@@ -5,7 +5,8 @@ define([
         'use strict';
 
         var PlacesCollection = Backbone.Collection.extend({
-            model: PlacesModel
+            model: PlacesModel,
+            url: '/places'
         });
 
         return PlacesCollection;
