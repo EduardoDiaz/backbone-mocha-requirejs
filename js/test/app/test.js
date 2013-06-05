@@ -40,6 +40,7 @@ define([
                 this.view.remove();
             });
 
+
             describe('DOM', function () {
                 it('render data to HTML', function () {
                     var $item = this.view.render().$el;
